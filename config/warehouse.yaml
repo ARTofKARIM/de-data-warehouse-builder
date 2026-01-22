@@ -1,0 +1,18 @@
+warehouse:
+  connection: "sqlite:///data/warehouse.db"
+  schema: "star"
+dimensions:
+  - name: "dim_customer"
+    source: "data/customers.csv"
+    key: "customer_id"
+  - name: "dim_product"
+    source: "data/products.csv"
+    key: "product_id"
+  - name: "dim_date"
+    auto_generate: true
+    range: ["2023-01-01", "2025-12-31"]
+facts:
+  - name: "fact_sales"
+    source: "data/sales.csv"
+    measures: ["quantity", "amount", "discount"]
+    dimension_keys: ["customer_id", "product_id", "date_id"]
